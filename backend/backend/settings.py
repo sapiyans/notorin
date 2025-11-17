@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'ninja',
     'core',
+    'receipts',
+    'spaces',
+    'sandbox',
 ]
 
 MIDDLEWARE = [
