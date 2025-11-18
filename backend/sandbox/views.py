@@ -11,8 +11,20 @@ scraper = NFCeScraper()
 parser = SimpleParser()
 
 
-@router.get("/teste", response={200: dict, 400: dict})
-def teste_scraper(request, success: bool = True):
-    if success:
-        return 200, {'success': True}
-    return 400, {'error': True, 'message': 'Erro ao acessar a page de teste'}
+@router.get("/teste")
+def teste_scraper(request, url: str):
+    try:
+        html = scraper.get_html(url)
+        dados = parser.parse(html)
+        
+        return JsonResponse({
+            'status': 'ok',
+            'dados': dados
+        })
+        
+    except Exception as e:
+        logger.error(f"Erro no teste_scraper: {str(e)}")
+        return JsonResponse({
+            'status': 'erro',
+            'erro': str(e)
+        })
